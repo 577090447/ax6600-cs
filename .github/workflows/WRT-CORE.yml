@@ -138,7 +138,7 @@ jobs:
             sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
           fi
 
-      # ========== 注入 files/ + 本地 package（不修改 FanchmWrt 名称） ==========
+      # ========== 注入 files/ + 本地 package（FanchmWrt 全家桶，不改名） ==========
       - name: Inject Files & Local Packages
         run: |
           # 1. 注入 files/
@@ -150,8 +150,8 @@ jobs:
             echo "ℹ️ 未检测到 files/，跳过"
           fi
 
-          # 2. 本地包注入（保持原始命名，不做 FanchmWrt -> OpenWRT 替换）
-          for _pkg in athena-led fullconenat-nft fullconenat fwxd libfwx_common luci-app-athena-led luci-theme-fanchmwrt; do
+          # 2. 本地包全量注入（fwx 内核模块 + 用户态 + 主题，零 sed 改名）
+          for _pkg in athena-led fullconenat-nft fullconenat fwx fwxd libfwx_common luci-app-athena-led luci-theme-fanchmwrt; do
             _src="$GITHUB_WORKSPACE/package/$_pkg"
             _dst_name="${_pkg#fcm-}"
             _dst="$GITHUB_WORKSPACE/wrt/package/$_dst_name"
@@ -164,7 +164,7 @@ jobs:
               echo "⚠️ 未检测到 package/$_pkg，跳过"
             fi
           done
-          echo "✅ 注入完成（主题保持 FanchmWrt 原始标识）"
+          echo "✅ 注入完成（fwx 内核模块已包含，主题保持 FanchmWrt 原始标识）"
       # ========== 注入结束 ==========
 
       - name: Check Scripts
@@ -305,7 +305,7 @@ jobs:
             请注意选择你需要的设备固件！
             不要问，刷就完事了！
 
-            全系带开源硬件加速，别问了！
+            DPI 行为管理 + FanchmWrt 主题，软转发保障识别率。
 
             源码：${{env.WRT_REPO}}
             分支：${{env.WRT_BRANCH}}
