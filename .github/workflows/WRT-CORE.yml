@@ -138,9 +138,10 @@ jobs:
             sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
           fi
 
-      # ========== 注入 files/ + 本地 package（athena-led 全家桶） ==========
+      # ========== 注入 files/ + 本地 package（不修改 FanchmWrt 名称） ==========
       - name: Inject Files & Local Packages
         run: |
+          # 1. 注入 files/
           if [ -d "$GITHUB_WORKSPACE/files" ]; then
             mkdir -p "$GITHUB_WORKSPACE/wrt/files"
             rsync -a --delete "$GITHUB_WORKSPACE/files/" "$GITHUB_WORKSPACE/wrt/files/"
@@ -149,20 +150,28 @@ jobs:
             echo "ℹ️ 未检测到 files/，跳过"
           fi
 
-          for PKG in athena-led luci-app-athena-led; do
-            if [ -d "$GITHUB_WORKSPACE/package/$PKG" ]; then
-              mkdir -p "$GITHUB_WORKSPACE/wrt/package/$PKG"
-              rsync -a --delete "$GITHUB_WORKSPACE/package/$PKG/" "$GITHUB_WORKSPACE/wrt/package/$PKG/"
-              echo "✅ 本地包注入: $PKG"
+          # 2. 本地包注入（保持原始命名，不做 FanchmWrt -> OpenWRT 替换）
+          for _pkg in athena-led fullconenat-nft fullconenat fwxd libfwx_common luci-app-athena-led luci-theme-fanchmwrt; do
+            _src="$GITHUB_WORKSPACE/package/$_pkg"
+            _dst_name="${_pkg#fcm-}"
+            _dst="$GITHUB_WORKSPACE/wrt/package/$_dst_name"
+
+            if [ -d "$_src" ]; then
+              mkdir -p "$_dst"
+              rsync -a --delete "$_src/" "$_dst/"
+              echo "✅ 本地包注入: $_pkg -> package/$_dst_name"
             else
-              echo "⚠️ 未检测到 package/$PKG，跳过"
+              echo "⚠️ 未检测到 package/$_pkg，跳过"
             fi
           done
+          echo "✅ 注入完成（主题保持 FanchmWrt 原始标识）"
       # ========== 注入结束 ==========
 
       - name: Check Scripts
         run: |
-          find ./ -maxdepth 3 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
+          find "$GITHUB_WORKSPACE" -maxdepth 5 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
+          chmod +x "$GITHUB_WORKSPACE/Scripts/Packages.sh" "$GITHUB_WORKSPACE/Scripts/Handles.sh" "$GITHUB_WORKSPACE/Scripts/Settings.sh" 2>/dev/null || true
+          chmod +x "$GITHUB_WORKSPACE/.github/scripts/"*.sh 2>/dev/null || true
 
       - name: Restore Build Cache
         id: cache-restore
