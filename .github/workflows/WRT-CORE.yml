@@ -138,10 +138,9 @@ jobs:
             sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
           fi
 
-# ========== 注入 files/ + 本地 package（精准对齐图中 5 个包，原样注入） ==========
+      # ========== 注入 files/ + 本地 package（athena-led 全家桶） ==========
       - name: Inject Files & Local Packages
         run: |
-          # 1. 注入 files/
           if [ -d "$GITHUB_WORKSPACE/files" ]; then
             mkdir -p "$GITHUB_WORKSPACE/wrt/files"
             rsync -a --delete "$GITHUB_WORKSPACE/files/" "$GITHUB_WORKSPACE/wrt/files/"
@@ -150,27 +149,20 @@ jobs:
             echo "ℹ️ 未检测到 files/，跳过"
           fi
 
-          # 2. 本地包注入（图中 5 个目录，无重命名）
-          for _pkg in athena-led luci-app-athena-led luci-app-fwx-dashboard-setting luci-app-fwx-dashboard luci-theme-fanchmwrt; do
-            _src="$GITHUB_WORKSPACE/package/$_pkg"
-            _dst="$GITHUB_WORKSPACE/wrt/package/$_pkg"
-
-            if [ -d "$_src" ]; then
-              mkdir -p "$_dst"
-              rsync -a --delete "$_src/" "$_dst/"
-              echo "✅ 本地包注入: $_pkg"
+          for PKG in athena-led luci-app-athena-led; do
+            if [ -d "$GITHUB_WORKSPACE/package/$PKG" ]; then
+              mkdir -p "$GITHUB_WORKSPACE/wrt/package/$PKG"
+              rsync -a --delete "$GITHUB_WORKSPACE/package/$PKG/" "$GITHUB_WORKSPACE/wrt/package/$PKG/"
+              echo "✅ 本地包注入: $PKG"
             else
-              echo "⚠️ 未检测到 package/$_pkg，跳过"
+              echo "⚠️ 未检测到 package/$PKG，跳过"
             fi
           done
-          echo "✅ 注入完成"
       # ========== 注入结束 ==========
 
       - name: Check Scripts
         run: |
-          find "$GITHUB_WORKSPACE" -maxdepth 5 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
-          chmod +x "$GITHUB_WORKSPACE/Scripts/Packages.sh" "$GITHUB_WORKSPACE/Scripts/Handles.sh" "$GITHUB_WORKSPACE/Scripts/Settings.sh" 2>/dev/null || true
-          chmod +x "$GITHUB_WORKSPACE/.github/scripts/"*.sh 2>/dev/null || true
+          find ./ -maxdepth 3 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
 
       - name: Restore Build Cache
         id: cache-restore
@@ -304,7 +296,7 @@ jobs:
             请注意选择你需要的设备固件！
             不要问，刷就完事了！
 
-            DPI 行为管理 + FanchmWrt 主题，软转发保障识别率。
+            全系带开源硬件加速，别问了！
 
             源码：${{env.WRT_REPO}}
             分支：${{env.WRT_BRANCH}}
