@@ -138,7 +138,7 @@ jobs:
             sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
           fi
 
-      # ========== 注入 files/ + 本地 package（FanchmWrt 全家桶，不改名） ==========
+# ========== 注入 files/ + 本地 package（精准对齐图中 5 个包，原样注入） ==========
       - name: Inject Files & Local Packages
         run: |
           # 1. 注入 files/
@@ -150,21 +150,20 @@ jobs:
             echo "ℹ️ 未检测到 files/，跳过"
           fi
 
-          # 2. 本地包全量注入（fwx 内核模块 + 用户态 + 主题，零 sed 改名）
-          for _pkg in athena-led fullconenat-nft fullconenat fwx fwxd libfwx_common luci-app-athena-led luci-theme-fanchmwrt; do
+          # 2. 本地包注入（图中 5 个目录，无重命名）
+          for _pkg in athena-led luci-app-athena-led luci-app-fwx-dashboard-setting luci-app-fwx-dashboard luci-theme-fanchmwrt; do
             _src="$GITHUB_WORKSPACE/package/$_pkg"
-            _dst_name="${_pkg#fcm-}"
-            _dst="$GITHUB_WORKSPACE/wrt/package/$_dst_name"
+            _dst="$GITHUB_WORKSPACE/wrt/package/$_pkg"
 
             if [ -d "$_src" ]; then
               mkdir -p "$_dst"
               rsync -a --delete "$_src/" "$_dst/"
-              echo "✅ 本地包注入: $_pkg -> package/$_dst_name"
+              echo "✅ 本地包注入: $_pkg"
             else
               echo "⚠️ 未检测到 package/$_pkg，跳过"
             fi
           done
-          echo "✅ 注入完成（fwx 内核模块已包含，主题保持 FanchmWrt 原始标识）"
+          echo "✅ 注入完成"
       # ========== 注入结束 ==========
 
       - name: Check Scripts
