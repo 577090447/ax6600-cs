@@ -1,14 +1,11 @@
 # ==================== 主题与基础 ====================
 CONFIG_PACKAGE_luci-theme-bootstrap=y
 CONFIG_PACKAGE_luci-theme-vantage=n
-CONFIG_PACKAGE_luci-app-vantage=y
-CONFIG_PACKAGE_luci-i18n-vantage-zh-cn=y
-
-
-CONFIG_PACKAGE_luci-app-nlbwmon=y      # 流量排行必备
-CONFIG_PACKAGE_luci-app-statistics=y   # 实时图表
-CONFIG_PACKAGE_kmod-sensors=y          # 温度（若设备支持）
-
+CONFIG_PACKAGE_luci-app-vantage=n
+CONFIG_PACKAGE_luci-i18n-vantage-zh-cn=n
+CONFIG_PACKAGE_luci-theme-fanchmwrt=y        # 不改名
+CONFIG_PACKAGE_luci-app-fwx-dashboard=y
+CONFIG_PACKAGE_luci-app-fwx-dashboard-setting=y
 
 
 # ==================== 设置向导 ====================
@@ -230,20 +227,8 @@ CONFIG_PACKAGE_OpenWrt-momo=n
 CONFIG_PACKAGE_momo=n
 CONFIG_PACKAGE_luci-app-momo=n
 
-# ── 本地注入的 fwx 全家桶（全开） ──
-CONFIG_PACKAGE_fwx=y                         # 内核 DPI，必须开
-CONFIG_PACKAGE_fwxd=y
-CONFIG_PACKAGE_libfwx_common=y
 
-CONFIG_PACKAGE_luci-theme-fanchmwrt=y        # 不改名
 
-# ── Fullcone（nft 版，不碰 ipt 旧版） ──
-CONFIG_PACKAGE_fullconenat-nft=y
-# CONFIG_PACKAGE_fullconenat=n
-CONFIG_PACKAGE_fullconenat-sonic=n
 
-# ── 关键：保障 fwx DPI 能看到包 ──
-CONFIG_PACKAGE_kmod-nft-offload=n            # 关 NSS/nft 硬件 offload
-# 如果你源码里带 NSS 菜单，下面也显式关
-# CONFIG_PACKAGE_kmod-nss-ifb=n
-# CONFIG_NSS_OFFLOAD=n
+
+
