@@ -132,6 +132,15 @@ UPDATE_PACKAGE "luci-app-store" "linkease/istore" "main"
 
 # FanchmWrt 主题（从大杂烩仓库 sparse-checkout 子目录，避免拉取无关 package）
 SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt" "fanchmwrt-25.12.6" "package/fcm/luci-theme-fanchmwrt" "./package/luci-theme-fanchmwrt"
+# ========= FCM底层依赖包（FWX必须依赖这一组！） =========
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt" "fanchmwrt-25.12.6" "package/fcm/fullconenat" "./package/fullconenat"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt" "fanchmwrt-25.12.6" "package/fcm/fullconenat-nft" "./package/fullconenat-nft"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt" "fanchmwrt-25.12.6" "package/fcm/fwx" "./package/fwx"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt" "fanchmwrt-25.12.6" "package/fcm/fwxd" "./package/fwxd"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt" "fanchmwrt-25.12.6" "package/fcm/libfwx_common" "./package/libfwx_common"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt" "fanchmwrt-25.12.6" "package/fcm/shortcut-fe" "./package/shortcut-fe"
+# 主题你之前已经单独拉过 luci-theme-fanchmwrt，这里可以不用重复
+
 # ========== FanchmWrt FWX全套插件 fanchmwrt/fanchmwrt-packages ==========
 # FWX全套，依赖绑定，一次性全部稀疏检出
 SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-app-center" "./package/luci-app-fwx-app-center"
