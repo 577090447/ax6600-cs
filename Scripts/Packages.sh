@@ -132,6 +132,27 @@ UPDATE_PACKAGE "luci-app-store" "linkease/istore" "main"
 
 # FanchmWrt 主题（从大杂烩仓库 sparse-checkout 子目录，避免拉取无关 package）
 SPARSE_CLONE_SUBDIR "577090447/fanchmwrt" "fanchmwrt-25.12.6" "package/fcm/luci-theme-fanchmwrt" "./package/luci-theme-fanchmwrt"
+# ========== FanchmWrt FWX全套插件 fanchmwrt/fanchmwrt-packages ==========
+# FWX全套，依赖绑定，一次性全部稀疏检出
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-app-center" "./package/luci-app-fwx-app-center"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-appfilter" "./package/luci-app-fwx-appfilter"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-dashboard-setting" "./package/luci-app-fwx-dashboard-setting"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-dashboard" "./package/luci-app-fwx-dashboard"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-fastnat" "./package/luci-app-fwx-fastnat"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-feature" "./package/luci-app-fwx-feature"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-firewall" "./package/luci-app-fwx-firewall"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-mac-blacklist" "./package/luci-app-fwx-mac-blacklist"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-macfilter" "./package/luci-app-fwx-macfilter"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-network" "./package/luci-app-fwx-network"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-record-whitelist" "./package/luci-app-fwx-record-whitelist"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-record" "./package/luci-app-fwx-record"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-resources" "./package/luci-app-fwx-resources"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-session-stat" "./package/luci-app-fwx-session-stat"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-system" "./package/luci-app-fwx-system"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-traffic-stat" "./package/luci-app-fwx-traffic-stat"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-user-record" "./package/luci-app-fwx-user-record"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-user" "./package/luci-app-fwx-user"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-wireless" "./package/luci-app-fwx-wireless"
 
 
 
