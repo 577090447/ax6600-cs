@@ -1,12 +1,9 @@
 # ==================== 主题与基础 ====================
 CONFIG_PACKAGE_luci-theme-bootstrap=y
 CONFIG_PACKAGE_luci-theme-vantage=n
-CONFIG_PACKAGE_luci-app-vantage=n
-CONFIG_PACKAGE_luci-i18n-vantage-zh-cn=n
+CONFIG_PACKAGE_luci-app-vantage=y
+CONFIG_PACKAGE_luci-i18n-vantage-zh-cn=y
 CONFIG_PACKAGE_luci-theme-fanchmwrt=y        # 不改名
-CONFIG_PACKAGE_luci-app-fwx-dashboard=n
-CONFIG_PACKAGE_luci-app-fwx-dashboard-setting=n
-
 
 # ==================== 设置向导 ====================
 CONFIG_PACKAGE_luci-app-netwizard=y
@@ -65,34 +62,11 @@ CONFIG_PACKAGE_luci-app-linkeasefull-embed=n
 CONFIG_PACKAGE_luci-app-upnp=y
 
 # ==================== OAF (过滤) ====================
-# CONFIG_PACKAGE_luci-app-oaf=n
-# CONFIG_PACKAGE_appfilter=n
-# CONFIG_PACKAGE_kmod-oaf=n
+# CONFIG_PACKAGE_luci-app-oaf=y
+# CONFIG_PACKAGE_appfilter=y
+# CONFIG_PACKAGE_kmod-oaf=y
 # iptables-nft：fw4 nftables兼容层，OAF、OpenClash部分老代码调用iptables命令
-# CONFIG_PACKAGE_iptables-nft=n
-
-CONFIG_PACKAGE_luci-app-fwx-app-center=y
-CONFIG_PACKAGE_luci-app-fwx-appfilter=y
-CONFIG_PACKAGE_luci-app-fwx-dashboard-setting=y
-CONFIG_PACKAGE_luci-app-fwx-dashboard=y
-CONFIG_PACKAGE_luci-app-fwx-fastnat=y
-CONFIG_PACKAGE_luci-app-fwx-feature=y
-CONFIG_PACKAGE_luci-app-fwx-firewall=y
-CONFIG_PACKAGE_luci-app-fwx-mac-blacklist=y
-CONFIG_PACKAGE_luci-app-fwx-macfilter=y
-CONFIG_PACKAGE_luci-app-fwx-network=y
-CONFIG_PACKAGE_luci-app-fwx-record-whitelist=y
-CONFIG_PACKAGE_luci-app-fwx-record=y
-CONFIG_PACKAGE_luci-app-fwx-resources=y
-CONFIG_PACKAGE_luci-app-fwx-session-stat=y
-CONFIG_PACKAGE_luci-app-fwx-system=y
-CONFIG_PACKAGE_luci-app-fwx-traffic-stat=y
-CONFIG_PACKAGE_luci-app-fwx-user-record=y
-CONFIG_PACKAGE_luci-app-fwx-user=y
-CONFIG_PACKAGE_luci-app-fwx-wireless=y
-# FWX核心程序fwxd，必须选！
-CONFIG_PACKAGE_fwxd=y
-
+# CONFIG_PACKAGE_iptables-nft=y
 
 # ==================== iStore (保留官方源) ====================
 CONFIG_PACKAGE_luci-app-store=y
@@ -138,7 +112,7 @@ CONFIG_FEED_pon_userspace=n
 CONFIG_PACKAGE_fullconenat-sonic=n
 # 彻底排除 aurora 与 luci-light 依赖坑
 CONFIG_PACKAGE_luci-theme-aurora=n
-CONFIG_PACKAGE_luci-light=n
+CONFIG_PACKAGE_luci-light=y
 
 # ==================== 内核与驱动 (NSS ECM 配套，新增conntrack模块) ====================
 CONFIG_PACKAGE_kmod-ata-ahci=y
