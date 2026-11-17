@@ -62,11 +62,11 @@ CONFIG_PACKAGE_luci-app-linkeasefull-embed=n
 CONFIG_PACKAGE_luci-app-upnp=y
 
 # ==================== OAF (过滤) ====================
-# CONFIG_PACKAGE_luci-app-oaf=y
-# CONFIG_PACKAGE_appfilter=y
-# CONFIG_PACKAGE_kmod-oaf=y
+CONFIG_PACKAGE_luci-app-oaf=y
+CONFIG_PACKAGE_appfilter=y
+CONFIG_PACKAGE_kmod-oaf=y
 # iptables-nft：fw4 nftables兼容层，OAF、OpenClash部分老代码调用iptables命令
-# CONFIG_PACKAGE_iptables-nft=y
+CONFIG_PACKAGE_iptables-nft=y
 
 # ==================== iStore (保留官方源) ====================
 CONFIG_PACKAGE_luci-app-store=y
