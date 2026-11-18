@@ -162,6 +162,7 @@ SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-traffic-
 SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-user-record" "./package/luci-app-fwx-user-record"
 SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-user" "./package/luci-app-fwx-user"
 SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-app-fwx-wireless" "./package/luci-app-fwx-wireless"
+SPARSE_CLONE_SUBDIR "fanchmwrt/fanchmwrt-packages" "main" "luci-theme-velix-clone" "./package/luci-theme-velix-clone"
 
 
 
