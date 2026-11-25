@@ -136,20 +136,21 @@ jobs:
           PROJECT_MIRRORS_FILE="./scripts/projectsmirrors.json"
           if [ -f "$PROJECT_MIRRORS_FILE" ]; then
             sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
-          fi
+          end
 
-      # ========== 注入 files/ + 本地 package（athena-led 全家桶） ==========
+      # ========== ★ 改动 1：注入 files/ + 本地 package（含 design 主题） ==========
       - name: Inject Files & Local Packages
         run: |
           if [ -d "$GITHUB_WORKSPACE/files" ]; then
             mkdir -p "$GITHUB_WORKSPACE/wrt/files"
-            rsync -a --delete "$GITHUB_WORKSPACE/files/" "$GITHUB_WORKSPACE/wrt/files/"
+            rsync -a "$GITHUB_WORKSPACE/files/" "$GITHUB_WORKSPACE/wrt/files/"
             echo "✅ files/ injected"
           else
             echo "ℹ️ 未检测到 files/，跳过"
           fi
 
-          for PKG in athena-led luci-app-athena-led; do
+          # 本地包统一注入：athena-led 全家桶 + coolsnowwolf design 主题
+          for PKG in athena-led luci-app-athena-led luci-theme-design; do
             if [ -d "$GITHUB_WORKSPACE/package/$PKG" ]; then
               mkdir -p "$GITHUB_WORKSPACE/wrt/package/$PKG"
               rsync -a --delete "$GITHUB_WORKSPACE/package/$PKG/" "$GITHUB_WORKSPACE/wrt/package/$PKG/"
@@ -192,12 +193,33 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
+      # ========== ★ 改动 2：脚本注入 + 独立步骤重建索引 ==========
       - name: Custom Packages
         run: |
           cd ./wrt/
           $GITHUB_WORKSPACE/Scripts/Packages.sh
           $GITHUB_WORKSPACE/Scripts/Handles.sh
           $GITHUB_WORKSPACE/.github/scripts/prepare-i2c-tools.sh
+
+      - name: Install Packages
+        run: |
+          cd ./wrt/
+          # Packages.sh 拉入了 OpenClash / viking / diskman 等新包，重建全量索引
+          ./scripts/feeds install -a
+          # 强制认回本地注入的 design 主题（覆盖 feeds 内可能存在的同名索引）
+          ./scripts/feeds install -f luci-theme-design 2>/dev/null || \
+            echo "⚠️ luci-theme-design 未在索引中，请检查 package/luci-theme-design/Makefile"
+      # ========== ★ 改动 2 结束 ==========
+
+      - name: Verify No 952 / turboacc Leftovers
+        run: |
+          cd ./wrt/
+          if find target/linux/generic/hack-6.18* -name "952-*" 2>/dev/null | grep -q .; then
+            echo "❌ ERROR: 952 patch still present! turboacc 残留未清理。"
+            find target/linux/generic/hack-6.18* -name "952-*"
+            exit 1
+          fi
+          echo "✅ No 952 / turboacc leftovers found."
 
       - name: Custom Settings
         run: |
@@ -296,7 +318,7 @@ jobs:
             请注意选择你需要的设备固件！
             不要问，刷就完事了！
 
-            全系带开源硬件加速，别问了！
+            全系带开源硬件加速（NSS + SONiC FullCone），别问了！
 
             源码：${{env.WRT_REPO}}
             分支：${{env.WRT_BRANCH}}
