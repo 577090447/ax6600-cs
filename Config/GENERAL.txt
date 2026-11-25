@@ -1,6 +1,7 @@
 # ==================== 主题与基础 ====================
 CONFIG_PACKAGE_luci-theme-bootstrap=y
-CONFIG_PACKAGE_luci-theme-design=y
+# 只保留自带主题，不编任何第三方主题（含 design/argon/aurora 等）
+CONFIG_DEFAULT_PACKAGE_luci-theme-bootstrap=y
 
 # ==================== 设置向导 ====================
 CONFIG_PACKAGE_luci-app-netwizard=y
@@ -9,7 +10,6 @@ CONFIG_PACKAGE_luci-i18n-netwizard-zh-cn=y
 # ==================== 文件管理 ====================
 CONFIG_PACKAGE_luci-app-harbor-file=y
 CONFIG_PACKAGE_luci-i18n-harbor-file-zh-cn=y
-
 
 # ==================== 科学插件 ====================
 CONFIG_PACKAGE_luci-app-openclash=y
@@ -31,7 +31,6 @@ CONFIG_DEVEL=y
 CONFIG_PACKAGE_athena-led=y
 CONFIG_PACKAGE_luci-app-athena-led=y
 CONFIG_PACKAGE_luci-i18n-athena-led-zh-cn=y
-
 
 # ==================== 磁盘与文件共享 ====================
 CONFIG_PACKAGE_luci-app-diskman=y
@@ -107,9 +106,9 @@ CONFIG_FEED_video=n
 CONFIG_FEED_pon_drivers=n
 CONFIG_FEED_pon_userspace=n
 CONFIG_PACKAGE_fullconenat-sonic=n
-# 彻底排除 aurora 与 luci-light 依赖坑
+# 彻底排除 aurora 与 luci-light 依赖坑（luci-light 会裁剪依赖）
 CONFIG_PACKAGE_luci-theme-aurora=n
-CONFIG_PACKAGE_luci-light=y
+CONFIG_PACKAGE_luci-light=n
 
 # ==================== 内核与驱动 (NSS ECM 配套，新增conntrack模块) ====================
 CONFIG_PACKAGE_kmod-ata-ahci=y
@@ -212,17 +211,15 @@ CONFIG_PACKAGE_usbutils=y
 CONFIG_PACKAGE_xz-utils=y
 
 # ==================== 显式屏蔽历史冗余/未勾选主题 ====================
-# 确保 Argon/Footstrap/Kucat/Shadcn/Momo 等不混入
+# 确保 Design/Argon/Footstrap/Kucat/Shadcn/Vantage/Momo 等不混入
+CONFIG_PACKAGE_luci-theme-design=n
 CONFIG_PACKAGE_luci-theme-argon=n
 CONFIG_PACKAGE_luci-theme-footstrap=n
 CONFIG_PACKAGE_luci-theme-kucat=n
 CONFIG_PACKAGE_luci-theme-shadcn=n
+CONFIG_PACKAGE_luci-theme-vantage=n
+CONFIG_PACKAGE_luci-theme-carbon=n
+CONFIG_PACKAGE_luci-theme-fluent=n
 CONFIG_PACKAGE_OpenWrt-momo=n
 CONFIG_PACKAGE_momo=n
 CONFIG_PACKAGE_luci-app-momo=n
-
-
-
-
-
-
